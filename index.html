@@ -3,412 +3,380 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#17122b">
-<title>AAPKA PG | Owner Dashboard</title>
+<meta name="description" content="AAPKA PG Owner Management App">
+<link rel="manifest" href="manifest.webmanifest">
+<title>AAPKA PG — Owner</title>
 <style>
-:root {
-  --bg:#100d1d;--panel:#1c1730;--panel2:#251e3c;
-  --purple:#9b7cff;--text:#f7f4ff;--muted:#a69dbb;
-  --green:#4ade80;--red:#fb7185;--line:#342b4c;
-}
+:root{--ink:#211a38;--muted:#89829e;--purple:#7046e8;--bg:#f6f4fb;--line:#eeeaf6;--green:#159b68;--red:#d94b68}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);
-font-family:Arial,sans-serif}
-button,input,select,textarea{font:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px system-ui,Arial}
+button,input,select{font:inherit}
 button{cursor:pointer}
-.app{max-width:1200px;margin:auto;padding:18px}
-header{display:flex;align-items:center;justify-content:space-between;
-gap:12px;margin-bottom:22px}
-.logo{font-size:22px;font-weight:900;letter-spacing:1px}
-.logo span{color:var(--purple)}
-.small{color:var(--muted);font-size:12px;margin-top:5px}
-.topbtn,.primary{border:0;border-radius:12px;padding:12px 16px;
-background:var(--purple);color:#17122b;font-weight:bold}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.card{background:var(--panel);border:1px solid var(--line);
-border-radius:18px;padding:17px;margin-bottom:14px}
-.stat{font-size:25px;font-weight:800;margin-top:10px}
-.muted{color:var(--muted);font-size:13px}
-nav{display:flex;gap:8px;overflow-x:auto;padding:4px 0 17px}
-nav button{white-space:nowrap;background:var(--panel);
-color:var(--muted);border:1px solid var(--line);
-padding:11px 15px;border-radius:12px}
-nav button.active{background:var(--purple);color:#17122b}
-h2{font-size:19px;margin:4px 0 16px}
-h3{font-size:15px;margin:0 0 12px}
+.app{max-width:520px;margin:auto;min-height:100vh;padding-bottom:85px}
+header{background:linear-gradient(135deg,#17122b,#392466,#7046e8);color:white;padding:24px 19px 25px;border-radius:0 0 28px 28px}
+.brand{font-size:12px;letter-spacing:2px;font-weight:800}
+header h1{font-size:25px;margin:22px 0}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{padding:14px;background:#ffffff17;border:1px solid #ffffff30;border-radius:16px}
+.stat small{display:block;color:#ded5ff;font-size:11px}
+.stat strong{font-size:21px;display:block;margin-top:5px}
+main{padding:18px 15px}
 .page{display:none}
 .page.active{display:block}
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
-input,select,textarea{width:100%;padding:12px;margin:6px 0 13px;
-border-radius:10px;border:1px solid var(--line);
-background:#130f22;color:white}
-label{font-size:12px;color:var(--muted)}
-.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.item{padding:13px 0;border-bottom:1px solid var(--line);
-display:flex;justify-content:space-between;gap:12px;align-items:center}
+.heading{display:flex;justify-content:space-between;align-items:center;margin:8px 2px 13px}
+.heading h2{font-size:18px;margin:0}
+.card{background:white;border:1px solid var(--line);border-radius:17px;padding:15px;margin-bottom:13px;box-shadow:0 8px 25px #35205d0b}
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.quick button{background:white;border:1px solid var(--line);border-radius:14px;padding:13px 3px;font-size:11px;font-weight:700;color:var(--ink)}
+.quick span{display:block;font-size:21px;margin-bottom:5px}
+button.primary{background:linear-gradient(100deg,#7046e8,#956fff);color:white;border:0;border-radius:12px;padding:12px 15px;font-weight:800}
+button.secondary{background:#f1edff;color:var(--purple);border:1px solid #e3d9ff;border-radius:10px;padding:9px 12px;font-weight:700}
+.full{width:100%}
+.field{margin:13px 0}
+.field label{display:block;font-size:11px;font-weight:800;color:var(--muted);margin-bottom:6px}
+.field input,.field select,.search{width:100%;padding:12px;border:1px solid var(--line);border-radius:11px;background:white;color:var(--ink)}
+.item{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
 .item:last-child{border:0}
-.item strong{display:block;margin-bottom:5px}
-.badge{font-size:11px;padding:5px 8px;border-radius:20px;
-background:#33284d;color:#d9caff}
-.paid{color:var(--green)}
-.due{color:var(--red)}
-.danger{background:#542535;color:white;border:0;border-radius:9px;
-padding:8px 10px}
-.secondary{background:var(--panel2);color:white;border:1px solid var(--line);
-border-radius:9px;padding:8px 10px}
-.empty{text-align:center;color:var(--muted);padding:25px 5px}
-.result{font-size:24px;font-weight:bold;color:var(--green);margin:12px 0}
-footer{text-align:center;color:var(--muted);font-size:11px;padding:25px}
-@media(max-width:700px){
- .grid{grid-template-columns:repeat(2,1fr)}
- .formgrid{grid-template-columns:1fr}
- .app{padding:13px}
- .stat{font-size:21px}
-}
+.avatar{width:39px;height:39px;flex:none;border-radius:13px;background:#f0ebff;color:var(--purple);display:grid;place-items:center;font-weight:800}
+.grow{flex:1;min-width:0}
+.grow strong{display:block;font-size:13px}
+.grow small{color:var(--muted);font-size:11px}
+.amount{font-weight:800;font-size:13px}
+.muted{color:var(--muted);font-size:12px}
+.empty{text-align:center;color:var(--muted);padding:24px 8px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.bed{padding:12px 2px;border:1px solid #ded5f5;border-radius:10px;background:#f1edff;color:#7046e8;font-size:11px;font-weight:800}
+.bed.occupied{background:#eaf8f1;border-color:#bdebd4;color:#168457}
+.bed.notice{background:#fff4df;border-color:#f4d49c;color:#ad6d0a}
+.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(520px,100%);display:grid;grid-template-columns:repeat(5,1fr);background:#ffffffed;border-top:1px solid var(--line);padding:9px 5px calc(9px + env(safe-area-inset-bottom));z-index:4}
+.nav button{border:0;background:none;color:#9992aa;font-size:10px;font-weight:700}
+.nav button span{display:block;font-size:19px;margin-bottom:3px}
+.nav button.active{color:var(--purple)}
+.modalback{display:none;position:fixed;inset:0;background:#160e2b88;z-index:8;align-items:flex-end;justify-content:center}
+.modalback.show{display:flex}
+.modal{background:white;width:min(520px,100%);padding:20px 17px calc(25px + env(safe-area-inset-bottom));border-radius:23px 23px 0 0;max-height:88vh;overflow:auto}
+.modalhead{display:flex;justify-content:space-between;align-items:center}
+.toast{display:none;position:fixed;bottom:95px;left:50%;transform:translateX(-50%);background:#211936;color:white;padding:12px 17px;border-radius:12px;z-index:12;font-size:12px}
+.progress{height:9px;background:#eeeaf7;border-radius:20px;overflow:hidden;margin:12px 0}
+.progress span{display:block;height:100%;background:linear-gradient(90deg,#7046e8,#a78bfa)}
+.note{background:#f1edff;color:#59418e;padding:12px;border-radius:12px;font-size:12px;margin-top:12px}
+@media(min-width:600px){body{padding:20px 0}.app{border-radius:25px;overflow:hidden;box-shadow:0 20px 70px #24143d20}}
 </style>
 </head>
 <body>
 <div class="app">
+
 <header>
- <div>
-  <div class="logo">AAPKA <span>PG</span></div>
-  <div class="small">PROPERTY MANAGEMENT</div>
+ <div class="brand">AAPKA PG · OWNER</div>
+ <div style="font-size:12px;opacity:.8;margin-top:5px">PROPERTY MANAGEMENT</div>
+ <h1 id="welcome">Welcome to your PG 👋</h1>
+ <div class="stats">
+  <div class="stat"><small>RENT COLLECTED</small><strong id="collection">₹0</strong></div>
+  <div class="stat"><small>OUTSTANDING RENT</small><strong id="outstanding">₹0</strong></div>
+  <div class="stat"><small>OCCUPIED BEDS</small><strong id="occupancy">0 / 0</strong></div>
+  <div class="stat"><small>SECURITY DEPOSITS</small><strong id="deposits">₹0</strong></div>
  </div>
- <button class="topbtn" onclick="showPage('settings')">⚙ Settings</button>
 </header>
 
-<nav id="nav">
- <button class="active" onclick="showPage('home',this)">Dashboard</button>
- <button onclick="showPage('tenants',this)">Tenants</button>
- <button onclick="showPage('rooms',this)">Rooms & Beds</button>
- <button onclick="showPage('payments',this)">Payments</button>
- <button onclick="showPage('complaints',this)">Complaints</button>
- <button onclick="showPage('electricity',this)">Electricity</button>
- <button onclick="showPage('settings',this)">Settings</button>
-</nav>
+<main>
 
 <section id="home" class="page active">
- <h2 id="welcome">Owner Dashboard</h2>
- <div class="grid">
-  <div class="card"><div class="muted">Total Tenants</div><div class="stat" id="sTenants">0</div></div>
-  <div class="card"><div class="muted">Available Beds</div><div class="stat" id="sBeds">0</div></div>
-  <div class="card"><div class="muted">Rent Collected</div><div class="stat" id="sPaid">₹0</div></div>
-  <div class="card"><div class="muted">Rent Outstanding</div><div class="stat" id="sDue">₹0</div></div>
+ <div class="heading"><h2>Quick actions</h2><span class="muted">Your property</span></div>
+ <div class="quick">
+  <button onclick="openModal('tenant')"><span>＋</span>Add tenant</button>
+  <button onclick="showPage('beds')"><span>▦</span>Manage beds</button>
+  <button onclick="openModal('payment')"><span>₹</span>Record rent</button>
+  <button onclick="showPage('bills')"><span>ϟ</span>Electricity</button>
  </div>
+
+ <div class="heading" style="margin-top:24px"><h2>Occupancy</h2><span class="muted" id="occupancyPercent">0% full</span></div>
  <div class="card">
-  <h3>Quick Actions</h3>
-  <div class="actions">
-   <button class="primary" onclick="showPage('tenants')">+ Add Tenant</button>
-   <button class="secondary" onclick="showPage('rooms')">+ Add Bed</button>
-   <button class="secondary" onclick="showPage('payments')">Record Payment</button>
-   <button class="secondary" onclick="showPage('complaints')">New Complaint</button>
-  </div>
+  <div id="occupancyText">No beds added yet</div>
+  <div class="progress"><span id="occupancyBar" style="width:0%"></span></div>
+  <div class="muted">Add beds and tenants to track occupancy.</div>
  </div>
+
+ <div class="heading"><h2>Pending rent</h2><button class="secondary" onclick="showPage('payments')">View all</button></div>
+ <div class="card" id="pendingList"><div class="empty">No pending rent</div></div>
+
+ <div class="heading"><h2>Recent activity</h2></div>
+ <div class="card" id="activity"><div class="empty">Your activity will appear here.</div></div>
+ <div class="note">Your data is saved in this browser on this device. This version does not yet have cloud backup or secure multi-user access.</div>
+</section>
+
+<section id="beds" class="page">
+ <div class="heading"><h2>Rooms & beds</h2><button class="secondary" onclick="openModal('bed')">＋ Add bed</button></div>
  <div class="card">
-  <h3>Recent Payments</h3>
-  <div id="recentPayments" class="empty">No payments recorded yet.</div>
+  <div class="muted">Tap a bed to change its status.</div>
+  <div class="grid" id="bedGrid" style="margin-top:15px"></div>
+  <div id="noBeds" class="empty">No beds added yet. Tap Add bed.</div>
  </div>
 </section>
 
 <section id="tenants" class="page">
- <h2>Tenant Management</h2>
- <div class="card">
-  <h3>Add New Tenant</h3>
-  <form id="tenantForm">
-   <div class="formgrid">
-    <div><label>Full Name</label><input name="name" required placeholder="Tenant name"></div>
-    <div><label>Phone Number</label><input name="phone" required placeholder="Phone"></div>
-    <div><label>Room Number</label><input name="room" placeholder="Room"></div>
-    <div><label>Bed Number</label><input name="bed" placeholder="Bed"></div>
-    <div><label>Monthly Rent (₹)</label><input name="rent" type="number" min="0" required></div>
-    <div><label>Security Deposit (₹)</label><input name="deposit" type="number" min="0" value="0"></div>
-    <div><label>Joining Date</label><input name="joining" type="date"></div>
-   </div>
-   <button class="primary">Save Tenant</button>
-  </form>
- </div>
- <div class="card">
-  <input id="tenantSearch" placeholder="Search tenant by name or phone..." oninput="renderTenants()">
-  <div id="tenantList"></div>
- </div>
-</section>
-
-<section id="rooms" class="page">
- <h2>Rooms & Beds</h2>
- <div class="card">
-  <h3>Add Bed</h3>
-  <form id="bedForm">
-   <div class="formgrid">
-    <div><label>Room Number</label><input name="room" required></div>
-    <div><label>Bed Number</label><input name="bed" required></div>
-   </div>
-   <button class="primary">Add Bed</button>
-  </form>
- </div>
- <div class="card"><h3>Bed Inventory</h3><div id="bedList"></div></div>
+ <div class="heading"><h2>Tenants</h2><button class="secondary" onclick="openModal('tenant')">＋ Add</button></div>
+ <input class="search" id="tenantSearch" placeholder="Search tenant or room" oninput="renderTenants()">
+ <div class="card" id="tenantList" style="margin-top:13px"></div>
 </section>
 
 <section id="payments" class="page">
- <h2>Rent & Payments</h2>
+ <div class="heading"><h2>Rent & payments</h2><button class="secondary" onclick="openModal('payment')">＋ Record</button></div>
  <div class="card">
-  <h3>Record Rent Payment</h3>
-  <form id="paymentForm">
-   <label>Tenant</label><select name="tenant" id="paymentTenant" required></select>
-   <div class="formgrid">
-    <div><label>Amount (₹)</label><input name="amount" type="number" min="1" required></div>
-    <div><label>Payment Date</label><input name="date" type="date" required></div>
-    <div><label>Payment Month</label><input name="month" type="month" required></div>
-    <div><label>Payment Method</label>
-     <select name="method"><option>Cash</option><option>UPI</option><option>Bank Transfer</option><option>Other</option></select>
-    </div>
-   </div>
-   <button class="primary">Save Payment</button>
-  </form>
+  <div class="muted">Total collected</div>
+  <h2 id="payCollected">₹0</h2>
+  <div class="muted">Outstanding: <b id="payDue">₹0</b></div>
  </div>
- <div class="card"><h3>Payment History</h3><div id="paymentList"></div></div>
+ <div class="card" id="paymentList"></div>
+</section>
+
+<section id="bills" class="page">
+ <div class="heading"><h2>Electricity calculator</h2></div>
+ <div class="card">
+  <div class="field"><label>ROOM NUMBER</label><input id="billRoom" placeholder="Room number"></div>
+  <div class="field"><label>PREVIOUS READING</label><input id="prevRead" type="number" placeholder="Previous meter reading"></div>
+  <div class="field"><label>CURRENT READING</label><input id="currRead" type="number" placeholder="Current meter reading"></div>
+  <div class="field"><label>NUMBER OF TENANTS</label><input id="people" type="number" min="1" value="1"></div>
+  <div class="field"><label>RATE PER UNIT (₹)</label><input id="rate" type="number" value="9"></div>
+  <button class="primary full" onclick="calculateBill()">Calculate bill</button>
+  <div class="note" id="billResult">Enter meter readings to calculate the bill.</div>
+ </div>
 </section>
 
 <section id="complaints" class="page">
- <h2>Complaints Management</h2>
- <div class="card">
-  <h3>New Complaint</h3>
-  <form id="complaintForm">
-   <label>Tenant</label><select name="tenant" id="complaintTenant"></select>
-   <label>Complaint Details</label><textarea name="detail" required rows="3" placeholder="Describe the issue"></textarea>
-   <label>Priority</label><select name="priority"><option>Normal</option><option>High</option><option>Urgent</option></select>
-   <button class="primary">Submit Complaint</button>
-  </form>
- </div>
- <div class="card"><h3>All Complaints</h3><div id="complaintList"></div></div>
-</section>
-
-<section id="electricity" class="page">
- <h2>Electricity Calculator</h2>
- <div class="card">
-  <h3>Calculate Electricity Bill</h3>
-  <label>Previous Meter Reading</label><input id="previous" type="number" min="0" value="0">
-  <label>Current Meter Reading</label><input id="current" type="number" min="0" value="0">
-  <label>Rate per Unit (₹)</label><input id="rate" type="number" min="0" value="8">
-  <button class="primary" onclick="calculateElectricity()">Calculate Bill</button>
-  <div class="result" id="billResult">₹0</div>
-  <div class="muted" id="unitResult">0 units consumed</div>
- </div>
+ <div class="heading"><h2>Complaints</h2><button class="secondary" onclick="openModal('complaint')">＋ Add</button></div>
+ <div class="card" id="complaintList"></div>
 </section>
 
 <section id="settings" class="page">
- <h2>Property Settings</h2>
+ <div class="heading"><h2>Property settings</h2></div>
  <div class="card">
-  <h3>Property Information</h3>
-  <label>PG / Property Name</label><input id="propertyName" placeholder="My PG">
-  <button class="primary" onclick="saveSettings()">Save Settings</button>
+  <div class="field"><label>PROPERTY NAME</label><input id="propertyName" placeholder="Enter your PG name"></div>
+  <button class="primary full" onclick="saveSettings()">Save property details</button>
  </div>
  <div class="card">
-  <h3>Data Management</h3>
-  <p class="muted">Your information is stored in this browser on this device.</p>
-  <button class="danger" onclick="exportData()">Export Backup</button>
-  <button class="secondary" onclick="document.getElementById('importFile').click()">Import Backup</button>
-  <input id="importFile" type="file" accept="application/json" hidden onchange="importData(event)">
-  <hr style="border-color:var(--line);margin:20px 0">
-  <button class="danger" onclick="clearData()">Delete All App Data</button>
+  <h3>Data management</h3>
+  <p class="muted">Your entries are stored locally in this browser. Clearing browser data can erase them. This is not cloud storage.</p>
+  <button class="secondary full" onclick="resetAll()">Clear all app data</button>
  </div>
 </section>
-<footer>AAPKA PG • OWNER MANAGEMENT</footer>
+
+</main>
+
+<nav class="nav">
+ <button class="active" data-page="home" onclick="showPage('home')"><span>⌂</span>Home</button>
+ <button data-page="beds" onclick="showPage('beds')"><span>▦</span>Beds</button>
+ <button data-page="tenants" onclick="showPage('tenants')"><span>♙</span>Tenants</button>
+ <button data-page="payments" onclick="showPage('payments')"><span>₹</span>Hisaab</button>
+ <button data-page="settings" onclick="showPage('settings')"><span>⚙</span>Settings</button>
+</nav>
 </div>
 
-<script>
-const KEY = "aapka_pg_owner_v1";
-let data = loadData();
+<div class="modalback" id="modalback" onclick="if(event.target===this)closeModal()">
+ <div class="modal">
+  <div class="modalhead"><h3 id="modalTitle">Add</h3><button class="secondary" onclick="closeModal()">Close</button></div>
+  <div id="modalBody"></div>
+ </div>
+</div>
+<div class="toast" id="toast"></div>
 
-function loadData(){
- try {
-  return JSON.parse(localStorage.getItem(KEY)) || freshData();
- } catch(e) { return freshData(); }
-}
-function freshData(){
- return {tenants:[],beds:[],payments:[],complaints:[],settings:{name:""}};
-}
+<script>
+let tenants=JSON.parse(localStorage.getItem("apg_tenants")||"[]");
+let beds=JSON.parse(localStorage.getItem("apg_beds")||"[]");
+let payments=JSON.parse(localStorage.getItem("apg_payments")||"[]");
+let complaints=JSON.parse(localStorage.getItem("apg_complaints")||"[]");
+let activities=JSON.parse(localStorage.getItem("apg_activities")||"[]");
+let property=localStorage.getItem("apg_property")||"";
+
+function money(n){return "₹"+Number(n||0).toLocaleString("en-IN")}
 function save(){
- localStorage.setItem(KEY,JSON.stringify(data));
- renderAll();
+ localStorage.setItem("apg_tenants",JSON.stringify(tenants));
+ localStorage.setItem("apg_beds",JSON.stringify(beds));
+ localStorage.setItem("apg_payments",JSON.stringify(payments));
+ localStorage.setItem("apg_complaints",JSON.stringify(complaints));
+ localStorage.setItem("apg_activities",JSON.stringify(activities));
 }
-function id(){
- return Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+function logActivity(message){
+ activities.unshift(message);
+ activities=activities.slice(0,8);
 }
-function money(n){
- return "₹"+Number(n||0).toLocaleString("en-IN");
+function toast(message){
+ let t=document.getElementById("toast");
+ t.textContent=message;t.style.display="block";
+ setTimeout(()=>t.style.display="none",2200);
 }
-function safe(v){
- return String(v??"").replace(/[&<>"']/g,c=>({
- "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
- }[c]));
+function esc(s){
+ return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 }
-function showPage(name,button){
+function showPage(page){
  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
- document.getElementById(name).classList.add("active");
- document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
- if(button)button.classList.add("active");
- else document.querySelectorAll("nav button").forEach(b=>{
-  if(b.getAttribute("onclick")?.includes("'"+name+"'"))b.classList.add("active");
- });
- renderAll();
- window.scrollTo(0,0);
+ document.getElementById(page).classList.add("active");
+ document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
+ renderAll();window.scrollTo(0,0);
 }
-function renderAll(){
- renderDashboard();renderTenants();renderBeds();
- renderPayments();renderComplaints();renderTenantOptions();
- document.getElementById("welcome").textContent =
- (data.settings.name||"Owner")+" Dashboard";
- document.getElementById("propertyName").value=data.settings.name||"";
+function openModal(type){
+ let title="",html="";
+ if(type==="tenant"){
+  title="Add a tenant";
+  html=`<div class="field"><label>FULL NAME</label><input id="mName" placeholder="Tenant name"></div>
+  <div class="field"><label>PHONE NUMBER</label><input id="mPhone" type="tel" placeholder="Mobile number"></div>
+  <div class="field"><label>ROOM NUMBER</label><input id="mRoom" placeholder="Room number"></div>
+  <div class="field"><label>BED</label><input id="mBed" placeholder="A / B"></div>
+  <div class="field"><label>MONTHLY RENT (₹)</label><input id="mRent" type="number" min="0" placeholder="7500"></div>
+  <div class="field"><label>SECURITY DEPOSIT (₹)</label><input id="mDeposit" type="number" min="0" placeholder="15000"></div>
+  <button class="primary full" onclick="addTenant()">Save tenant</button>`;
+ }
+ if(type==="bed"){
+  title="Add a bed";
+  html=`<div class="field"><label>ROOM NUMBER</label><input id="mBedRoom" placeholder="e.g. 101"></div>
+  <div class="field"><label>BED LABEL</label><input id="mBedLabel" placeholder="A"></div>
+  <button class="primary full" onclick="addBed()">Save bed</button>`;
+ }
+ if(type==="payment"){
+  title="Record rent payment";
+  html=`<div class="field"><label>TENANT</label><select id="mPayTenant">${tenants.map((t,i)=>`<option value="${i}">${esc(t.name)} · Room ${esc(t.room)}</option>`).join("")}</select></div>
+  <div class="field"><label>AMOUNT (₹)</label><input id="mPayAmount" type="number" min="1" placeholder="Amount received"></div>
+  <button class="primary full" onclick="addPayment()">Save payment</button>`;
+  if(!tenants.length)html='<div class="empty">Add a tenant first.</div>';
+ }
+ if(type==="complaint"){
+  title="New complaint";
+  html=`<div class="field"><label>ROOM NUMBER</label><input id="mComplaintRoom" placeholder="Room number"></div>
+  <div class="field"><label>COMPLAINT DETAILS</label><input id="mIssue" placeholder="Describe the issue"></div>
+  <button class="primary full" onclick="addComplaint()">Save complaint</button>`;
+ }
+ document.getElementById("modalTitle").textContent=title;
+ document.getElementById("modalBody").innerHTML=html;
+ document.getElementById("modalback").classList.add("show");
+}
+function closeModal(){document.getElementById("modalback").classList.remove("show")}
+function addTenant(){
+ let name=document.getElementById("mName").value.trim();
+ let room=document.getElementById("mRoom").value.trim();
+ let rent=Number(document.getElementById("mRent").value);
+ if(!name||!room||rent<=0){toast("Enter name, room and valid rent");return}
+ let tenant={name,room,bed:document.getElementById("mBed").value.trim(),phone:document.getElementById("mPhone").value.trim(),rent,deposit:Number(document.getElementById("mDeposit").value)||0};
+ tenants.push(tenant);
+ payments.push({name,room,amount:rent,status:"Due",date:new Date().toLocaleDateString()});
+ logActivity("Added tenant: "+name);
+ save();closeModal();renderAll();toast("Tenant added successfully");
+}
+function addBed(){
+ let room=document.getElementById("mBedRoom").value.trim();
+ let label=document.getElementById("mBedLabel").value.trim()||"A";
+ if(!room){toast("Enter room number");return}
+ let id=room+"-"+label;
+ if(beds.some(b=>b.id===id)){toast("This bed already exists");return}
+ beds.push({id,status:"vacant"});
+ logActivity("Added bed "+id);save();closeModal();renderAll();toast("Bed added");
+}
+function cycleBed(i){
+ let states=["vacant","occupied","notice"];
+ beds[i].status=states[(states.indexOf(beds[i].status)+1)%states.length];
+ save();renderAll();toast("Bed status updated");
+}
+function addPayment(){
+ let index=Number(document.getElementById("mPayTenant").value);
+ let amount=Number(document.getElementById("mPayAmount").value);
+ if(!tenants[index]||amount<=0){toast("Enter a valid amount");return}
+ let t=tenants[index];
+ payments.push({name:t.name,room:t.room,amount,status:"Paid",date:new Date().toLocaleDateString()});
+ logActivity("Rent received from "+t.name+": "+money(amount));
+ save();closeModal();renderAll();toast("Payment recorded");
+}
+function markPaid(i){
+ payments[i].status="Paid";
+ logActivity("Payment marked paid: "+payments[i].name);
+ save();renderAll();toast("Payment updated");
+}
+function addComplaint(){
+ let room=document.getElementById("mComplaintRoom").value.trim();
+ let issue=document.getElementById("mIssue").value.trim();
+ if(!room||!issue){toast("Enter room and complaint");return}
+ complaints.push({room,issue,status:"New"});
+ logActivity("New complaint in room "+room);
+ save();closeModal();renderAll();toast("Complaint added");
+}
+function updateComplaint(i,value){complaints[i].status=value;save();renderComplaints()}
+function saveSettings(){
+ property=document.getElementById("propertyName").value.trim();
+ localStorage.setItem("apg_property",property);
+ document.getElementById("welcome").textContent=property?property+" 👋":"Welcome to your PG 👋";
+ toast("Property details saved");
+}
+function calculateBill(){
+ let previous=Number(document.getElementById("prevRead").value);
+ let current=Number(document.getElementById("currRead").value);
+ let people=Math.max(1,Number(document.getElementById("people").value)||1);
+ let rate=Number(document.getElementById("rate").value)||0;
+ if(!document.getElementById("billRoom").value.trim()||current<previous||rate<0){
+  toast("Check your room and meter readings");return;
+ }
+ let units=current-previous,total=units*rate;
+ document.getElementById("billResult").textContent=units+" units · Total "+money(total)+" · Each tenant "+money(total/people);
+}
+function renderTenants(){
+ let q=(document.getElementById("tenantSearch")?.value||"").toLowerCase();
+ let list=tenants.filter(t=>(t.name+" "+t.room).toLowerCase().includes(q));
+ document.getElementById("tenantList").innerHTML=list.length?list.map(t=>`
+ <div class="item"><div class="avatar">${esc(t.name.slice(0,2).toUpperCase())}</div>
+ <div class="grow"><strong>${esc(t.name)}</strong><small>Room ${esc(t.room)} · Bed ${esc(t.bed||"-")} · ${esc(t.phone)}</small></div>
+ <span class="amount">${money(t.rent)}</span></div>`).join(""):'<div class="empty">No tenants added yet.</div>';
+}
+function renderBeds(){
+ document.getElementById("bedGrid").innerHTML=beds.map((b,i)=>`<button class="bed ${b.status}" onclick="cycleBed(${i})">${esc(b.id)}<br>${esc(b.status)}</button>`).join("");
+ document.getElementById("noBeds").style.display=beds.length?"none":"block";
+}
+function renderPayments(){
+ let collected=payments.filter(p=>p.status==="Paid").reduce((s,p)=>s+Number(p.amount),0);
+ let due=payments.filter(p=>p.status!=="Paid").reduce((s,p)=>s+Number(p.amount),0);
+ document.getElementById("payCollected").textContent=money(collected);
+ document.getElementById("payDue").textContent=money(due);
+ document.getElementById("paymentList").innerHTML=payments.length?payments.map((p,i)=>`
+ <div class="item"><div class="avatar">${esc(p.name.slice(0,2).toUpperCase())}</div>
+ <div class="grow"><strong>${esc(p.name)}</strong><small>Room ${esc(p.room)} · ${esc(p.date||"")}</small></div>
+ <span class="amount">${money(p.amount)}</span>
+ ${p.status==="Paid"?'<span style="color:var(--green);font-size:11px">Paid</span>':`<button class="secondary" onclick="markPaid(${i})">Paid</button>`}
+ </div>`).join(""):'<div class="empty">No payment records yet.</div>';
+}
+function renderComplaints(){
+ document.getElementById("complaintList").innerHTML=complaints.length?complaints.map((c,i)=>`
+ <div class="item"><div class="avatar">!</div><div class="grow"><strong>${esc(c.issue)}</strong><small>Room ${esc(c.room)}</small></div>
+ <select onchange="updateComplaint(${i},this.value)" style="max-width:115px;padding:7px;border:1px solid var(--line);border-radius:9px">
+ <option ${c.status==="New"?"selected":""}>New</option>
+ <option ${c.status==="In progress"?"selected":""}>In progress</option>
+ <option ${c.status==="Done"?"selected":""}>Done</option></select></div>`).join(""):'<div class="empty">No complaints yet.</div>';
 }
 function renderDashboard(){
- const paid=data.payments.reduce((s,p)=>s+Number(p.amount),0);
- const rent=data.tenants.reduce((s,t)=>s+Number(t.rent),0);
- const due=Math.max(0,rent-paid);
- document.getElementById("sTenants").textContent=data.tenants.length;
- document.getElementById("sBeds").textContent=data.beds.filter(b=>!data.tenants.some(t=>t.room===b.room&&t.bed===b.bed)).length;
- document.getElementById("sPaid").textContent=money(paid);
- document.getElementById("sDue").textContent=money(due);
- const recent=data.payments.slice().reverse().slice(0,5);
- document.getElementById("recentPayments").innerHTML=recent.length?
- recent.map(p=>`<div class="item"><div><strong>${safe(p.tenantName)}</strong><span class="muted">${safe(p.month)} • ${safe(p.date)}</span></div><b class="paid">${money(p.amount)}</b></div>`).join(""):"<div class='empty'>No payments recorded yet.</div>";
+ let collected=payments.filter(p=>p.status==="Paid").reduce((s,p)=>s+Number(p.amount),0);
+ let due=payments.filter(p=>p.status!=="Paid").reduce((s,p)=>s+Number(p.amount),0);
+ let occupied=beds.filter(b=>b.status==="occupied").length;
+ let deposits=tenants.reduce((s,t)=>s+Number(t.deposit||0),0);
+ document.getElementById("collection").textContent=money(collected);
+ document.getElementById("outstanding").textContent=money(due);
+ document.getElementById("occupancy").textContent=occupied+" / "+beds.length;
+ document.getElementById("deposits").textContent=money(deposits);
+ let percent=beds.length?Math.round(occupied/beds.length*100):0;
+ document.getElementById("occupancyPercent").textContent=percent+"% full";
+ document.getElementById("occupancyText").textContent=occupied+" occupied · "+(beds.length-occupied)+" available";
+ document.getElementById("occupancyBar").style.width=percent+"%";
+ let pending=payments.filter(p=>p.status!=="Paid");
+ document.getElementById("pendingList").innerHTML=pending.length?pending.map(p=>`
+ <div class="item"><div class="avatar">${esc(p.name.slice(0,2).toUpperCase())}</div><div class="grow"><strong>${esc(p.name)}</strong><small>Room ${esc(p.room)} · Rent pending</small></div><span class="amount">${money(p.amount)}</span></div>`).join(""):'<div class="empty">No pending rent 🎉</div>';
+ document.getElementById("activity").innerHTML=activities.length?activities.map(a=>`<div class="item"><div class="avatar">✓</div><div class="grow"><strong>${esc(a)}</strong></div></div>`).join(""):'<div class="empty">Your activity will appear here.</div>';
 }
-document.getElementById("tenantForm").addEventListener("submit",e=>{
- e.preventDefault();const f=new FormData(e.target);
- data.tenants.push({id:id(),name:f.get("name").trim(),phone:f.get("phone").trim(),
- room:f.get("room").trim(),bed:f.get("bed").trim(),rent:Number(f.get("rent")),
- deposit:Number(f.get("deposit")||0),joining:f.get("joining")});
- if(f.get("room")&&f.get("bed")&&!data.beds.some(b=>b.room===f.get("room")&&b.bed===f.get("bed"))){
-  data.beds.push({id:id(),room:f.get("room"),bed:f.get("bed")});
- }
- e.target.reset();save();alert("Tenant added successfully.");
-});
-function renderTenants(){
- const q=(document.getElementById("tenantSearch")?.value||"").toLowerCase();
- const list=data.tenants.filter(t=>(t.name+" "+t.phone).toLowerCase().includes(q));
- document.getElementById("tenantList").innerHTML=list.length?list.map(t=>`
- <div class="item"><div><strong>${safe(t.name)}</strong>
- <span class="muted">${safe(t.phone)} • Room ${safe(t.room||"-")} / Bed ${safe(t.bed||"-")}</span>
- <div class="muted">Rent ${money(t.rent)} • Deposit ${money(t.deposit)}</div></div>
- <button class="danger" onclick="deleteTenant('${t.id}')">Delete</button></div>`).join(""):"<div class='empty'>No tenants added yet.</div>";
+function renderAll(){
+ renderDashboard();renderBeds();renderTenants();renderPayments();renderComplaints();
+ document.getElementById("propertyName").value=property;
 }
-function deleteTenant(x){
- if(!confirm("Delete this tenant?"))return;
- data.tenants=data.tenants.filter(t=>t.id!==x);save();
+function resetAll(){
+ if(!confirm("This will permanently clear all data saved in this browser. Continue?"))return;
+ ["apg_tenants","apg_beds","apg_payments","apg_complaints","apg_activities","apg_property"].forEach(k=>localStorage.removeItem(k));
+ tenants=[];beds=[];payments=[];complaints=[];activities=[];property="";
+ renderAll();toast("All app data cleared");
 }
-document.getElementById("bedForm").addEventListener("submit",e=>{
- e.preventDefault();const f=new FormData(e.target);
- const room=f.get("room").trim(),bed=f.get("bed").trim();
- if(data.beds.some(b=>b.room===room&&b.bed===bed)){alert("This bed already exists.");return;}
- data.beds.push({id:id(),room,bed});e.target.reset();save();
-});
-function renderBeds(){
- const el=document.getElementById("bedList");
- el.innerHTML=data.beds.length?data.beds.map(b=>{
- const tenant=data.tenants.find(t=>t.room===b.room&&t.bed===b.bed);
- return `<div class="item"><div><strong>Room ${safe(b.room)} • Bed ${safe(b.bed)}</strong>
- <span class="badge">${tenant?"Occupied":"Available"}</span>
- ${tenant?`<div class="muted">${safe(tenant.name)}</div>`:""}</div>
- <button class="danger" onclick="deleteBed('${b.id}')">Delete</button></div>`;
- }).join(""):"<div class='empty'>No beds added yet.</div>";
-}
-function deleteBed(x){
- if(!confirm("Delete this bed?"))return;
- data.beds=data.beds.filter(b=>b.id!==x);save();
-}
-function renderTenantOptions(){
- ["paymentTenant","complaintTenant"].forEach(id=>{
- const el=document.getElementById(id);
- const old=el.value;
- el.innerHTML=data.tenants.map(t=>`<option value="${t.id}">${safe(t.name)} (${safe(t.phone)})</option>`).join("");
- if(data.tenants.some(t=>t.id===old))el.value=old;
- if(!data.tenants.length)el.innerHTML="<option value=''>Add a tenant first</option>";
- });
-}
-document.getElementById("paymentForm").addEventListener("submit",e=>{
- e.preventDefault();const f=new FormData(e.target);
- const t=data.tenants.find(t=>t.id===f.get("tenant"));
- if(!t){alert("Please add a tenant first.");return;}
- data.payments.push({id:id(),tenant:t.id,tenantName:t.name,
- amount:Number(f.get("amount")),date:f.get("date"),month:f.get("month"),method:f.get("method")});
- e.target.reset();save();alert("Payment saved.");
-});
-function renderPayments(){
- const el=document.getElementById("paymentList");
- el.innerHTML=data.payments.length?data.payments.slice().reverse().map(p=>
- `<div class="item"><div><strong>${safe(p.tenantName)}</strong>
- <span class="muted">${safe(p.month)} • ${safe(p.date)} • ${safe(p.method)}</span></div>
- <b class="paid">${money(p.amount)}</b>
- <button class="danger" onclick="deletePayment('${p.id}')">Delete</button></div>`
- ).join(""):"<div class='empty'>No payments recorded yet.</div>";
-}
-function deletePayment(x){
- if(!confirm("Delete this payment?"))return;
- data.payments=data.payments.filter(p=>p.id!==x);save();
-}
-document.getElementById("complaintForm").addEventListener("submit",e=>{
- e.preventDefault();const f=new FormData(e.target);
- const t=data.tenants.find(t=>t.id===f.get("tenant"));
- if(!t){alert("Please add a tenant first.");return;}
- data.complaints.push({id:id(),tenant:t.name,detail:f.get("detail"),
- priority:f.get("priority"),status:"Open"});
- e.target.reset();save();alert("Complaint added.");
-});
-function renderComplaints(){
- const el=document.getElementById("complaintList");
- el.innerHTML=data.complaints.length?data.complaints.slice().reverse().map(c=>
- `<div class="item"><div><strong>${safe(c.tenant)} • ${safe(c.priority)}</strong>
- <div class="muted">${safe(c.detail)}</div><span class="badge">${safe(c.status)}</span></div>
- <div><button class="secondary" onclick="toggleComplaint('${c.id}')">Change Status</button>
- <button class="danger" onclick="deleteComplaint('${c.id}')">Delete</button></div></div>`
- ).join(""):"<div class='empty'>No complaints recorded.</div>";
-}
-function toggleComplaint(x){
- const c=data.complaints.find(c=>c.id===x);
- if(c)c.status=c.status==="Open"?"Resolved":"Open";save();
-}
-function deleteComplaint(x){
- if(!confirm("Delete this complaint?"))return;
- data.complaints=data.complaints.filter(c=>c.id!==x);save();
-}
-function calculateElectricity(){
- const p=Number(document.getElementById("previous").value);
- const c=Number(document.getElementById("current").value);
- const r=Number(document.getElementById("rate").value);
- if(c<p||p<0||r<0){alert("Please enter valid meter readings and rate.");return;}
- const units=c-p;
- document.getElementById("unitResult").textContent=units+" units × "+money(r);
- document.getElementById("billResult").textContent=money(units*r);
-}
-function saveSettings(){
- data.settings.name=document.getElementById("propertyName").value.trim();
- save();alert("Settings saved.");
-}
-function exportData(){
- const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
- const url=URL.createObjectURL(blob);
- const a=document.createElement("a");a.href=url;a.download="aapka-pg-backup.json";
- a.click();URL.revokeObjectURL(url);
-}
-function importData(e){
- const file=e.target.files[0];if(!file)return;
- const reader=new FileReader();
- reader.onload=()=>{
-  try{
-   const x=JSON.parse(reader.result);
-   if(!x||!Array.isArray(x.tenants)||!Array.isArray(x.beds)||
-   !Array.isArray(x.payments)||!Array.isArray(x.complaints))throw Error();
-   data={...freshData(),...x};save();alert("Backup imported.");
-  }catch(err){alert("Invalid backup file.");}
- };
- reader.readAsText(file);
- e.target.value="";
-}
-function clearData(){
- if(!confirm("This permanently deletes all AAPKA PG data in this browser. Continue?"))return;
- if(!confirm("Are you absolutely sure? Export a backup first if needed."))return;
- data=freshData();save();alert("App data cleared.");
-}
+if(property)document.getElementById("welcome").textContent=property+" 👋";
 renderAll();
 </script>
 </body>
