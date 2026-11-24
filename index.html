@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#17122b">
+<meta name="description" content="Aapka PG owner management app">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+
+<title>Aapka PG — Owner</title>
+<style>
+:root{--ink:#201a35;--muted:#827c96;--purple:#7046e8;--purple2:#956fff;--bg:#f6f4fb;--card:#fff;--line:#eeeaf6;--green:#159b68;--amber:#d88b19;--red:#d94b68;--shadow:0 12px 35px #35205d12}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial}button,input,select{font:inherit}button{cursor:pointer}.app{max-width:520px;min-height:100vh;margin:auto;background:var(--bg);padding-bottom:88px}.top{background:linear-gradient(135deg,#1a1430,#34215e 65%,#6540c7);color:#fff;padding:22px 20px 25px;border-radius:0 0 28px 28px}.topline{display:flex;justify-content:space-between;align-items:center}.brand{font-size:12px;letter-spacing:2px;font-weight:800;opacity:.8}.avatar{width:38px;height:38px;border-radius:14px;background:#ffffff20;display:grid;place-items:center;font-weight:800}.hello{margin-top:24px;font-size:13px;color:#cfc4f8}.top h1{font-size:25px;margin:3px 0 17px;letter-spacing:-.7px}.period{font-size:12px;color:#ded5ff}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat{background:#ffffff13;border:1px solid #ffffff22;border-radius:17px;padding:13px}.stat small{display:block;color:#d7cff0;font-size:11px}.stat strong{display:block;font-size:21px;margin-top:5px}.stat .delta{font-size:10px;color:#a8f0d0;margin-top:2px}.content{padding:19px 16px}.sectionhead{display:flex;justify-content:space-between;align-items:center;margin:3px 2px 12px}.sectionhead h2{font-size:17px;margin:0;letter-spacing:-.3px}.link{border:0;background:none;color:var(--purple);font-size:12px;font-weight:800}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:15px;box-shadow:var(--shadow);margin-bottom:12px}.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.quick button{border:1px solid var(--line);background:#fff;border-radius:15px;padding:12px 4px;color:var(--ink);font-size:11px;font-weight:700;box-shadow:0 5px 15px #35205d08}.quick .ico{display:block;font-size:20px;margin-bottom:5px}.progress{height:9px;background:#eeeaf7;border-radius:20px;overflow:hidden;margin:12px 0 7px}.progress span{display:block;height:100%;background:linear-gradient(90deg,var(--purple),#a78bfa);border-radius:20px}.muted{color:var(--muted);font-size:12px}.row{display:flex;justify-content:space-between;align-items:center;gap:10px}.roomgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.bed{border:1px solid #e9e5f1;border-radius:10px;padding:10px 2px;text-align:center;font-size:11px;font-weight:800;background:#f8f7fb}.bed.occupied{background:#eaf8f1;border-color:#bdebd4;color:#168457}.bed.vacant{background:#f1edff;border-color:#d7c9ff;color:#6d48d5}.bed.notice{background:#fff5e6;border-color:#f4d49c;color:#ad6d0a}.listitem{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid var(--line)}.listitem:last-child{border:0;padding-bottom:0}.circle{width:38px;height:38px;border-radius:13px;background:#f0ebff;color:var(--purple);display:grid;place-items:center;font-weight:800;font-size:12px;flex:none}.grow{flex:1;min-width:0}.grow strong{display:block;font-size:13px}.grow small{color:var(--muted);font-size:11px}.amount{font-weight:800;font-size:13px;white-space:nowrap}.pill{font-size:10px;font-weight:800;padding:5px 8px;border-radius:30px;background:#eaf8f1;color:#168457}.pill.pending{background:#fff4df;color:#ad6d0a}.pill.open{background:#ffeaf0;color:#c33e5a}.primary{background:linear-gradient(100deg,var(--purple),var(--purple2));border:0;color:#fff;border-radius:13px;padding:12px 15px;font-weight:800;box-shadow:0 8px 18px #7046e833}.secondary{background:#f2edff;color:var(--purple);border:1px solid #e2d8ff;border-radius:12px;padding:10px 12px;font-weight:800}.full{width:100%}.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(520px,100%);background:#ffffffed;backdrop-filter:blur(16px);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding:9px 8px calc(9px + env(safe-area-inset-bottom));z-index:4}.bottom button{border:0;background:none;color:#9b95aa;font-size:10px;font-weight:700;padding:4px}.bottom button span{display:block;font-size:19px;margin-bottom:2px}.bottom button.active{color:var(--purple)}.page{display:none}.page.active{display:block}.toolbar{display:flex;gap:8px;margin-bottom:13px}.toolbar input,.field input,.field select{width:100%;border:1px solid var(--line);background:#fff;border-radius:12px;padding:12px;color:var(--ink);outline:none}.field{margin:12px 0}.field label{display:block;font-size:11px;color:var(--muted);font-weight:800;margin-bottom:6px}.modalback{position:fixed;inset:0;background:#160e2b77;display:none;align-items:flex-end;justify-content:center;z-index:8}.modalback.show{display:flex}.modal{background:#fff;width:min(520px,100%);border-radius:24px 24px 0 0;padding:22px 18px calc(24px + env(safe-area-inset-bottom));max-height:88vh;overflow:auto}.modal h3{margin:0 0 5px}.close{border:0;background:#f2eff8;border-radius:10px;padding:7px 10px}.toast{position:fixed;bottom:95px;left:50%;transform:translateX(-50%);background:#211936;color:white;padding:11px 16px;border-radius:12px;font-size:12px;display:none;z-index:10;box-shadow:var(--shadow)}.empty{text-align:center;padding:25px;color:var(--muted)}.heroNote{background:#f0ebff;border:1px solid #e0d5ff;color:#59418e;border-radius:14px;padding:12px;font-size:12px;margin-top:12px}
+@media(min-width:600px){body{padding:20px 0}.app{border-radius:26px;overflow:hidden;box-shadow:0 20px 70px #24143d20}.bottom{bottom:20px;border-radius:0 0 22px 22px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top">
+ <div class="topline"><div><div class="brand">AAPKA PG · OWNER</div><div class="period">PROPERTY MANAGEMENT</div></div><div class="avatar">AP</div></div>
+ <div class="hello">Good morning 👋</div><h1 id="pgTitle">Your PG at a glance</h1>
+ <div class="stats">
+  <div class="stat"><small>MONTHLY COLLECTION</small><strong id="collection">₹2,58,000</strong><div class="delta">↑ Rent received</div></div>
+  <div class="stat"><small>OUTSTANDING RENT</small><strong id="outstanding">₹34,000</strong><div class="delta">4 payments pending</div></div>
+  <div class="stat"><small>OCCUPANCY</small><strong id="occupancy">36 / 40</strong><div class="delta">90% occupied</div></div>
+  <div class="stat"><small>SECURITY DEPOSITS</small><strong id="deposits">₹5,70,000</strong><div class="delta">Held for tenants</div></div>
+ </div>
+</header>
+<main class="content">
+<section id="dashboard" class="page active">
+ <div class="sectionhead"><h2>Quick actions</h2><span class="muted">Everything in one place</span></div>
+ <div class="quick">
+  <button onclick="openModal('tenant')"><span class="ico">＋</span>Add tenant</button>
+  <button onclick="showPage('rooms')"><span class="ico">▦</span>Manage beds</button>
+  <button onclick="showPage('payments')"><span class="ico">₹</span>Record rent</button>
+  <button onclick="showPage('bills')"><span class="ico">ϟ</span>Electricity</button>
+ </div>
+ <div class="sectionhead" style="margin-top:23px"><h2>Occupancy overview</h2><button class="link" onclick="showPage('rooms')">View rooms →</button></div>
+ <div class="card"><div class="row"><div><strong id="occupiedLabel">36 beds occupied</strong><div class="muted">40 total beds · 2 vacant · 2 notice</div></div><span class="pill">90% full</span></div><div class="progress"><span id="occBar" style="width:90%"></span></div><div class="row muted"><span>Occupied</span><span>Vacant</span><span>Notice</span></div></div>
+ <div class="sectionhead"><h2>Pending rent</h2><button class="link" onclick="showPage('payments')">See all →</button></div>
+ <div class="card" id="pendingList"></div>
+ <div class="sectionhead"><h2>Recent activity</h2><span class="muted">This month</span></div>
+ <div class="card"><div class="listitem"><div class="circle">✓</div><div class="grow"><strong>Rent payment recorded</strong><small>Room 203 · Today, 9:42 AM</small></div><span class="amount" style="color:var(--green)">₹8,500</span></div><div class="listitem"><div class="circle">⚡</div><div class="grow"><strong>Electricity bill generated</strong><small>Room 108 · Yesterday</small></div><span class="amount">₹1,260</span></div><div class="listitem"><div class="circle">🔧</div><div class="grow"><strong>Wi-Fi complaint updated</strong><small>Room 108 · Yesterday</small></div><span class="pill pending">In progress</span></div></div>
+ <div class="heroNote">Demo workspace · Your changes are saved on this device. Connect a secure database before using with real tenants.</div>
+</section>
+<section id="rooms" class="page">
+ <div class="sectionhead"><h2>Rooms & beds</h2><button class="link" onclick="openModal('bed')">＋ Add bed</button></div>
+ <div class="card"><div class="row"><strong>Bed availability</strong><span class="muted">Tap a bed to change status</span></div><div class="row muted" style="margin:12px 0"><span>🟢 Occupied</span><span>🟣 Vacant</span><span>🟠 Notice</span></div><div class="roomgrid" id="bedGrid"></div></div>
+ <div class="sectionhead"><h2>Vacant beds</h2><span class="pill">2 available</span></div><div class="card"><div class="listitem"><div class="circle">104-A</div><div class="grow"><strong>Room 104 · Bed A</strong><small>Available now · Double sharing</small></div><span class="amount">₹7,500/mo</span></div><div class="listitem"><div class="circle">202-A</div><div class="grow"><strong>Room 202 · Bed A</strong><small>Notice · Available soon</small></div><span class="amount">₹7,500/mo</span></div></div>
+</section>
+<section id="tenants" class="page">
+ <div class="sectionhead"><h2>Tenants</h2><button class="link" onclick="openModal('tenant')">＋ Add tenant</button></div>
+ <div class="toolbar"><input id="tenantSearch" placeholder="Search name or room…" oninput="renderTenants()"></div><div class="card" id="tenantList"></div>
+</section>
+<section id="payments" class="page">
+ <div class="sectionhead"><h2>Rent & deposits</h2><button class="link" onclick="openModal('payment')">＋ Record payment</button></div>
+ <div class="card"><div class="muted">Collected this month</div><div style="font-size:28px;font-weight:850;margin:4px 0" id="payCollected">₹2,58,000</div><div class="row muted"><span>Outstanding: <b id="payDue">₹34,000</b></span><span>Deposit: <b>₹5,70,000</b></span></div></div>
+ <div class="sectionhead"><h2>Tenant payments</h2><span class="muted">November</span></div><div class="card" id="paymentList"></div>
+</section>
+<section id="bills" class="page">
+ <div class="sectionhead"><h2>Electricity calculator</h2><span class="pill">₹9 / unit</span></div>
+ <div class="card"><div class="field"><label>ROOM NUMBER</label><input id="billRoom" value="203" placeholder="e.g. 203"></div><div class="field"><label>PREVIOUS READING</label><input id="prevRead" type="number" value="4186"></div><div class="field"><label>CURRENT READING</label><input id="currRead" type="number" value="4400"></div><div class="field"><label>NUMBER OF TENANTS IN ROOM</label><input id="people" type="number" value="2" min="1"></div><div class="row"><span class="muted">Rate per unit</span><strong>₹9</strong></div><div class="heroNote" id="billResult">214 units · Total ₹1,926 · Each tenant ₹963</div><button class="primary full" style="margin-top:14px" onclick="calculateBill()">Calculate bill</button></div>
+ <div class="heroNote">Enter meter readings to calculate the room bill and equal tenant share. This demo does not send bills or collect payments.</div>
+</section>
+<section id="complaints" class="page">
+ <div class="sectionhead"><h2>Complaints</h2><button class="link" onclick="openModal('complaint')">＋ New complaint</button></div><div class="card" id="complaintList"></div>
+</section>
+<section id="settings" class="page">
+ <div class="sectionhead"><h2>Property settings</h2></div><div class="card"><div class="field"><label>PROPERTY NAME</label><input id="propertyName" value="Your PG"></div><div class="field"><label>MONTHLY ELECTRICITY RATE (₹/UNIT)</label><input id="unitRate" type="number" value="9"></div><button class="primary full" onclick="saveSettings()">Save settings</button></div>
+ <div class="card"><strong>Data & privacy</strong><p class="muted">This prototype stores demo entries locally in this browser on this device. It has no cloud backup, OTP login, payment gateway, WhatsApp integration, or multi-user access yet.</p><button class="secondary" onclick="resetDemo()">Reset demo data</button></div>
+</section>
+</main>
+<nav class="bottom">
+ <button class="active" data-page="dashboard" onclick="showPage('dashboard')"><span>⌂</span>Home</button>
+ <button data-page="rooms" onclick="showPage('rooms')"><span>▦</span>Beds</button>
+ <button data-page="tenants" onclick="showPage('tenants')"><span>♙</span>Tenants</button>
+ <button data-page="payments" onclick="showPage('payments')"><span>₹</span>Hisaab</button>
+ <button data-page="settings" onclick="showPage('settings')"><span>⚙</span>Settings</button>
+</nav>
+</div>
+<div class="modalback" id="modalback" onclick="if(event.target===this)closeModal()"><div class="modal"><div class="row"><h3 id="modalTitle">Add</h3><button class="close" onclick="closeModal()">✕</button></div><div id="modalBody"></div></div></div>
+<div class="toast" id="toast"></div>
+<script>
+const seedTenants=[{name:"Rahul Sharma",room:"102",bed:"B",phone:"9876543210",rent:8500,deposit:15000,status:"Due"},{name:"Neha Patel",room:"204",bed:"A",phone:"9876501234",rent:8000,deposit:15000,status:"Due"},{name:"Amit Kumar",room:"301",bed:"A",phone:"9876512345",rent:9000,deposit:18000,status:"Paid"},{name:"Vikram T",room:"108",bed:"B",phone:"9876523456",rent:8500,deposit:15000,status:"Paid"},{name:"Rohit Sharma",room:"203",bed:"B",phone:"9876534567",rent:8500,deposit:15000,status:"Paid"}];
+let tenants=JSON.parse(localStorage.getItem("apg_tenants")||"null")||seedTenants;
+let complaints=JSON.parse(localStorage.getItem("apg_complaints")||"null")||[{room:"203",issue:"AC not cooling",status:"Done"},{room:"108",issue:"Wi-Fi slow",status:"In progress"},{room:"301",issue:"Geyser not working",status:"New"}];
+let beds=JSON.parse(localStorage.getItem("apg_beds")||"null")||Array.from({length:20},(_,i)=>{let room=101+Math.floor(i/2),b=i%2?"B":"A";return {id:room+"-"+b,status:["occupied","occupied","occupied","vacant","notice"][i%5]==="vacant"?"vacant":i===13?"notice":"occupied"}});
+let payments=JSON.parse(localStorage.getItem("apg_payments")||"null")||[{name:"Rahul Sharma",room:"102",amount:8500,status:"Due"},{name:"Neha Patel",room:"204",amount:8000,status:"Due"},{name:"Amit Kumar",room:"301",amount:9000,status:"Paid"},{name:"Vikram T",room:"108",amount:8500,status:"Paid"}];
+function persist(){localStorage.setItem("apg_tenants",JSON.stringify(tenants));localStorage.setItem("apg_complaints",JSON.stringify(complaints));localStorage.setItem("apg_beds",JSON.stringify(beds));localStorage.setItem("apg_payments",JSON.stringify(payments))}
+function money(n){return "₹"+Number(n||0).toLocaleString("en-IN")}
+function toast(s){let t=document.getElementById("toast");t.textContent=s;t.style.display="block";setTimeout(()=>t.style.display="none",2200)}
+function showPage(p){document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));document.getElementById(p).classList.add("active");document.querySelectorAll(".bottom button").forEach(x=>x.classList.toggle("active",x.dataset.page===p));if(p==="tenants")renderTenants();if(p==="rooms")renderBeds();if(p==="payments")renderPayments();if(p==="complaints")renderComplaints();window.scrollTo(0,0)}
+function renderBeds(){document.getElementById("bedGrid").innerHTML=beds.map((b,i)=>`<button class="bed ${b.status}" onclick="cycleBed(${i})">${b.id}</button>`).join("")}
+function cycleBed(i){let states=["occupied","vacant","notice"];beds[i].status=states[(states.indexOf(beds[i].status)+1)%3];persist();renderBeds();toast(beds[i].id+" set to "+beds[i].status)}
+function renderTenants(){let q=(document.getElementById("tenantSearch")?.value||"").toLowerCase();let list=tenants.filter(t=>(t.name+" "+t.room).toLowerCase().includes(q));document.getElementById("tenantList").innerHTML=list.length?list.map(t=>`<div class="listitem"><div class="circle">${t.name.split(" ").map(x=>x[0]).slice(0,2).join("")}</div><div class="grow"><strong>${esc(t.name)}</strong><small>Room ${esc(t.room)} · Bed ${esc(t.bed||"A")} · ${esc(t.phone||"")}</small></div><span class="amount">${money(t.rent)}</span></div>`).join(""):'<div class="empty">No tenants found</div>'}
+function renderPayments(){document.getElementById("paymentList").innerHTML=payments.map((p,i)=>`<div class="listitem"><div class="circle">${p.name.split(" ").map(x=>x[0]).slice(0,2).join("")}</div><div class="grow"><strong>${esc(p.name)}</strong><small>Room ${esc(p.room)} · ${p.status}</small></div><span class="amount">${money(p.amount)}</span>${p.status!=="Paid"?`<button class="secondary" onclick="markPaid(${i})">Paid</button>`:"<span class='pill'>Paid</span>"}</div>`).join("")}
+function markPaid(i){payments[i].status="Paid";let t=tenants.find(x=>x.name===payments[i].name);if(t)t.status="Paid";persist();renderPayments();renderDashboard();toast("Payment marked as paid")}
+function renderComplaints(){document.getElementById("complaintList").innerHTML=complaints.map((c,i)=>`<div class="listitem"><div class="circle">⚒</div><div class="grow"><strong>${esc(c.issue)}</strong><small>Room ${esc(c.room)}</small></div><select onchange="complaints[${i}].status=this.value;persist();renderComplaints()" style="max-width:118px;border:1px solid var(--line);border-radius:9px;padding:7px;font-size:11px"><option ${c.status==="New"?"selected":""}>New</option><option ${c.status==="In progress"?"selected":""}>In progress</option><option ${c.status==="Done"?"selected":""}>Done</option></select></div>`).join("")||'<div class="empty">No complaints yet</div>'}
+function renderDashboard(){let due=payments.filter(p=>p.status!=="Paid").reduce((s,p)=>s+Number(p.amount),0);document.getElementById("outstanding").textContent=money(due||34000);document.getElementById("payDue").textContent=money(due||34000);document.getElementById("pendingList").innerHTML=payments.filter(p=>p.status!=="Paid").map((p,i)=>`<div class="listitem"><div class="circle">${p.name.split(" ").map(x=>x[0]).slice(0,2).join("")}</div><div class="grow"><strong>${esc(p.name)}</strong><small>Room ${esc(p.room)} · Rent pending</small></div><span class="amount">${money(p.amount)}</span></div>`).join("")||'<div class="empty">All rent payments are up to date 🎉</div>';document.getElementById("collection").textContent=money(258000);document.getElementById("payCollected").textContent=money(258000)}
+function openModal(type){let title="",body="";if(type==="tenant"){title="Add a tenant";body=`<div class="field"><label>FULL NAME</label><input id="mName" placeholder="Tenant name"></div><div class="field"><label>PHONE NUMBER</label><input id="mPhone" placeholder="10-digit mobile number" inputmode="numeric"></div><div class="field"><label>ROOM</label><input id="mRoom" placeholder="e.g. 104"></div><div class="field"><label>BED</label><select id="mBed"><option>A</option><option>B</option></select></div><div class="field"><label>MONTHLY RENT (₹)</label><input id="mRent" type="number" value="7500"></div><div class="field"><label>SECURITY DEPOSIT (₹)</label><input id="mDeposit" type="number" value="15000"></div><button class="primary full" onclick="addTenant()">Save tenant</button>`}
+if(type==="payment"){title="Record a payment";body=`<div class="field"><label>TENANT NAME</label><input id="mPayName" placeholder="Tenant name"></div><div class="field"><label>ROOM</label><input id="mPayRoom" placeholder="Room number"></div><div class="field"><label>AMOUNT (₹)</label><input id="mPayAmount" type="number" placeholder="8500"></div><button class="primary full" onclick="addPayment()">Save payment</button>`}
+if(type==="complaint"){title="New complaint";body=`<div class="field"><label>ROOM</label><input id="mCRoom" placeholder="Room number"></div><div class="field"><label>ISSUE</label><input id="mIssue" placeholder="e.g. Water leakage"></div><button class="primary full" onclick="addComplaint()">Create complaint</button>`}
+if(type==="bed"){title="Add a bed";body=`<div class="field"><label>BED ID</label><input id="mBedId" placeholder="e.g. 401-A"></div><button class="primary full" onclick="addBed()">Add bed</button>`}
+document.getElementById("modalTitle").textContent=title;document.getElementById("modalBody").innerHTML=body;document.getElementById("modalback").classList.add("show")}
+function closeModal(){document.getElementById("modalback").classList.remove("show")}
+function addTenant(){let name=v("mName"),room=v("mRoom");if(!name||!room)return toast("Enter tenant name and room");let t={name,room,bed:v("mBed"),phone:v("mPhone"),rent:+v("mRent")||0,deposit:+v("mDeposit")||0,status:"Due"};tenants.push(t);payments.push({name,room,amount:t.rent,status:"Due"});persist();closeModal();renderTenants();renderDashboard();toast("Tenant added")}
+function addPayment(){let name=v("mPayName"),room=v("mPayRoom"),amount=+v("mPayAmount");if(!name||!room||!amount)return toast("Complete all payment details");payments.unshift({name,room,amount,status:"Paid"});persist();closeModal();renderPayments();renderDashboard();toast("Payment recorded")}
+function addComplaint(){let room=v("mCRoom"),issue=v("mIssue");if(!room||!issue)return toast("Enter room and issue");complaints.unshift({room,issue,status:"New"});persist();closeModal();renderComplaints();toast("Complaint added")}
+function addBed(){let id=v("mBedId");if(!id)return toast("Enter a bed ID");beds.push({id,status:"vacant"});persist();closeModal();renderBeds();toast("Bed added")}
+function v(id){return document.getElementById(id)?.value.trim()||""}
+function calculateBill(){let prev=+v("prevRead"),curr=+v("currRead"),people=Math.max(1,+v("people")||1),rate=+(document.getElementById("unitRate")?.value||9);if(curr<prev)return toast("Current reading cannot be lower");let units=curr-prev,total=units*rate;document.getElementById("billResult").textContent=`${units} units · Total ${money(total)} · Each tenant ${money(total/people)}`}
+function saveSettings(){let n=v("propertyName");if(n){document.getElementById("pgTitle").textContent=n+" at a glance";localStorage.setItem("apg_name",n)}toast("Settings saved on this device")}
+function resetDemo(){if(confirm("Reset all local demo changes?")){["apg_tenants","apg_complaints","apg_beds","apg_payments"].forEach(k=>localStorage.removeItem(k));location.reload()}}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+document.getElementById("pgTitle").textContent=(localStorage.getItem("apg_name")||"Your PG")+" at a glance";
+renderBeds();renderTenants();renderPayments();renderComplaints();renderDashboard();calculateBill();
+</script>
+<script>if ("serviceWorker" in navigator) { window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(()=>{})); }</script>
+</body></html>
