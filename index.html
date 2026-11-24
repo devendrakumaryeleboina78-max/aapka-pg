@@ -1,1 +1,415 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#17122b">
+<title>AAPKA PG | Owner Dashboard</title>
+<style>
+:root {
+  --bg:#100d1d;--panel:#1c1730;--panel2:#251e3c;
+  --purple:#9b7cff;--text:#f7f4ff;--muted:#a69dbb;
+  --green:#4ade80;--red:#fb7185;--line:#342b4c;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:Arial,sans-serif}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.app{max-width:1200px;margin:auto;padding:18px}
+header{display:flex;align-items:center;justify-content:space-between;
+gap:12px;margin-bottom:22px}
+.logo{font-size:22px;font-weight:900;letter-spacing:1px}
+.logo span{color:var(--purple)}
+.small{color:var(--muted);font-size:12px;margin-top:5px}
+.topbtn,.primary{border:0;border-radius:12px;padding:12px 16px;
+background:var(--purple);color:#17122b;font-weight:bold}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.card{background:var(--panel);border:1px solid var(--line);
+border-radius:18px;padding:17px;margin-bottom:14px}
+.stat{font-size:25px;font-weight:800;margin-top:10px}
+.muted{color:var(--muted);font-size:13px}
+nav{display:flex;gap:8px;overflow-x:auto;padding:4px 0 17px}
+nav button{white-space:nowrap;background:var(--panel);
+color:var(--muted);border:1px solid var(--line);
+padding:11px 15px;border-radius:12px}
+nav button.active{background:var(--purple);color:#17122b}
+h2{font-size:19px;margin:4px 0 16px}
+h3{font-size:15px;margin:0 0 12px}
+.page{display:none}
+.page.active{display:block}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+input,select,textarea{width:100%;padding:12px;margin:6px 0 13px;
+border-radius:10px;border:1px solid var(--line);
+background:#130f22;color:white}
+label{font-size:12px;color:var(--muted)}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.item{padding:13px 0;border-bottom:1px solid var(--line);
+display:flex;justify-content:space-between;gap:12px;align-items:center}
+.item:last-child{border:0}
+.item strong{display:block;margin-bottom:5px}
+.badge{font-size:11px;padding:5px 8px;border-radius:20px;
+background:#33284d;color:#d9caff}
+.paid{color:var(--green)}
+.due{color:var(--red)}
+.danger{background:#542535;color:white;border:0;border-radius:9px;
+padding:8px 10px}
+.secondary{background:var(--panel2);color:white;border:1px solid var(--line);
+border-radius:9px;padding:8px 10px}
+.empty{text-align:center;color:var(--muted);padding:25px 5px}
+.result{font-size:24px;font-weight:bold;color:var(--green);margin:12px 0}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:25px}
+@media(max-width:700px){
+ .grid{grid-template-columns:repeat(2,1fr)}
+ .formgrid{grid-template-columns:1fr}
+ .app{padding:13px}
+ .stat{font-size:21px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+ <div>
+  <div class="logo">AAPKA <span>PG</span></div>
+  <div class="small">PROPERTY MANAGEMENT</div>
+ </div>
+ <button class="topbtn" onclick="showPage('settings')">⚙ Settings</button>
+</header>
+
+<nav id="nav">
+ <button class="active" onclick="showPage('home',this)">Dashboard</button>
+ <button onclick="showPage('tenants',this)">Tenants</button>
+ <button onclick="showPage('rooms',this)">Rooms & Beds</button>
+ <button onclick="showPage('payments',this)">Payments</button>
+ <button onclick="showPage('complaints',this)">Complaints</button>
+ <button onclick="showPage('electricity',this)">Electricity</button>
+ <button onclick="showPage('settings',this)">Settings</button>
+</nav>
+
+<section id="home" class="page active">
+ <h2 id="welcome">Owner Dashboard</h2>
+ <div class="grid">
+  <div class="card"><div class="muted">Total Tenants</div><div class="stat" id="sTenants">0</div></div>
+  <div class="card"><div class="muted">Available Beds</div><div class="stat" id="sBeds">0</div></div>
+  <div class="card"><div class="muted">Rent Collected</div><div class="stat" id="sPaid">₹0</div></div>
+  <div class="card"><div class="muted">Rent Outstanding</div><div class="stat" id="sDue">₹0</div></div>
+ </div>
+ <div class="card">
+  <h3>Quick Actions</h3>
+  <div class="actions">
+   <button class="primary" onclick="showPage('tenants')">+ Add Tenant</button>
+   <button class="secondary" onclick="showPage('rooms')">+ Add Bed</button>
+   <button class="secondary" onclick="showPage('payments')">Record Payment</button>
+   <button class="secondary" onclick="showPage('complaints')">New Complaint</button>
+  </div>
+ </div>
+ <div class="card">
+  <h3>Recent Payments</h3>
+  <div id="recentPayments" class="empty">No payments recorded yet.</div>
+ </div>
+</section>
+
+<section id="tenants" class="page">
+ <h2>Tenant Management</h2>
+ <div class="card">
+  <h3>Add New Tenant</h3>
+  <form id="tenantForm">
+   <div class="formgrid">
+    <div><label>Full Name</label><input name="name" required placeholder="Tenant name"></div>
+    <div><label>Phone Number</label><input name="phone" required placeholder="Phone"></div>
+    <div><label>Room Number</label><input name="room" placeholder="Room"></div>
+    <div><label>Bed Number</label><input name="bed" placeholder="Bed"></div>
+    <div><label>Monthly Rent (₹)</label><input name="rent" type="number" min="0" required></div>
+    <div><label>Security Deposit (₹)</label><input name="deposit" type="number" min="0" value="0"></div>
+    <div><label>Joining Date</label><input name="joining" type="date"></div>
+   </div>
+   <button class="primary">Save Tenant</button>
+  </form>
+ </div>
+ <div class="card">
+  <input id="tenantSearch" placeholder="Search tenant by name or phone..." oninput="renderTenants()">
+  <div id="tenantList"></div>
+ </div>
+</section>
+
+<section id="rooms" class="page">
+ <h2>Rooms & Beds</h2>
+ <div class="card">
+  <h3>Add Bed</h3>
+  <form id="bedForm">
+   <div class="formgrid">
+    <div><label>Room Number</label><input name="room" required></div>
+    <div><label>Bed Number</label><input name="bed" required></div>
+   </div>
+   <button class="primary">Add Bed</button>
+  </form>
+ </div>
+ <div class="card"><h3>Bed Inventory</h3><div id="bedList"></div></div>
+</section>
+
+<section id="payments" class="page">
+ <h2>Rent & Payments</h2>
+ <div class="card">
+  <h3>Record Rent Payment</h3>
+  <form id="paymentForm">
+   <label>Tenant</label><select name="tenant" id="paymentTenant" required></select>
+   <div class="formgrid">
+    <div><label>Amount (₹)</label><input name="amount" type="number" min="1" required></div>
+    <div><label>Payment Date</label><input name="date" type="date" required></div>
+    <div><label>Payment Month</label><input name="month" type="month" required></div>
+    <div><label>Payment Method</label>
+     <select name="method"><option>Cash</option><option>UPI</option><option>Bank Transfer</option><option>Other</option></select>
+    </div>
+   </div>
+   <button class="primary">Save Payment</button>
+  </form>
+ </div>
+ <div class="card"><h3>Payment History</h3><div id="paymentList"></div></div>
+</section>
+
+<section id="complaints" class="page">
+ <h2>Complaints Management</h2>
+ <div class="card">
+  <h3>New Complaint</h3>
+  <form id="complaintForm">
+   <label>Tenant</label><select name="tenant" id="complaintTenant"></select>
+   <label>Complaint Details</label><textarea name="detail" required rows="3" placeholder="Describe the issue"></textarea>
+   <label>Priority</label><select name="priority"><option>Normal</option><option>High</option><option>Urgent</option></select>
+   <button class="primary">Submit Complaint</button>
+  </form>
+ </div>
+ <div class="card"><h3>All Complaints</h3><div id="complaintList"></div></div>
+</section>
+
+<section id="electricity" class="page">
+ <h2>Electricity Calculator</h2>
+ <div class="card">
+  <h3>Calculate Electricity Bill</h3>
+  <label>Previous Meter Reading</label><input id="previous" type="number" min="0" value="0">
+  <label>Current Meter Reading</label><input id="current" type="number" min="0" value="0">
+  <label>Rate per Unit (₹)</label><input id="rate" type="number" min="0" value="8">
+  <button class="primary" onclick="calculateElectricity()">Calculate Bill</button>
+  <div class="result" id="billResult">₹0</div>
+  <div class="muted" id="unitResult">0 units consumed</div>
+ </div>
+</section>
+
+<section id="settings" class="page">
+ <h2>Property Settings</h2>
+ <div class="card">
+  <h3>Property Information</h3>
+  <label>PG / Property Name</label><input id="propertyName" placeholder="My PG">
+  <button class="primary" onclick="saveSettings()">Save Settings</button>
+ </div>
+ <div class="card">
+  <h3>Data Management</h3>
+  <p class="muted">Your information is stored in this browser on this device.</p>
+  <button class="danger" onclick="exportData()">Export Backup</button>
+  <button class="secondary" onclick="document.getElementById('importFile').click()">Import Backup</button>
+  <input id="importFile" type="file" accept="application/json" hidden onchange="importData(event)">
+  <hr style="border-color:var(--line);margin:20px 0">
+  <button class="danger" onclick="clearData()">Delete All App Data</button>
+ </div>
+</section>
+<footer>AAPKA PG • OWNER MANAGEMENT</footer>
+</div>
+
+<script>
+const KEY = "aapka_pg_owner_v1";
+let data = loadData();
+
+function loadData(){
+ try {
+  return JSON.parse(localStorage.getItem(KEY)) || freshData();
+ } catch(e) { return freshData(); }
+}
+function freshData(){
+ return {tenants:[],beds:[],payments:[],complaints:[],settings:{name:""}};
+}
+function save(){
+ localStorage.setItem(KEY,JSON.stringify(data));
+ renderAll();
+}
+function id(){
+ return Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+}
+function money(n){
+ return "₹"+Number(n||0).toLocaleString("en-IN");
+}
+function safe(v){
+ return String(v??"").replace(/[&<>"']/g,c=>({
+ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[c]));
+}
+function showPage(name,button){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ document.getElementById(name).classList.add("active");
+ document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+ if(button)button.classList.add("active");
+ else document.querySelectorAll("nav button").forEach(b=>{
+  if(b.getAttribute("onclick")?.includes("'"+name+"'"))b.classList.add("active");
+ });
+ renderAll();
+ window.scrollTo(0,0);
+}
+function renderAll(){
+ renderDashboard();renderTenants();renderBeds();
+ renderPayments();renderComplaints();renderTenantOptions();
+ document.getElementById("welcome").textContent =
+ (data.settings.name||"Owner")+" Dashboard";
+ document.getElementById("propertyName").value=data.settings.name||"";
+}
+function renderDashboard(){
+ const paid=data.payments.reduce((s,p)=>s+Number(p.amount),0);
+ const rent=data.tenants.reduce((s,t)=>s+Number(t.rent),0);
+ const due=Math.max(0,rent-paid);
+ document.getElementById("sTenants").textContent=data.tenants.length;
+ document.getElementById("sBeds").textContent=data.beds.filter(b=>!data.tenants.some(t=>t.room===b.room&&t.bed===b.bed)).length;
+ document.getElementById("sPaid").textContent=money(paid);
+ document.getElementById("sDue").textContent=money(due);
+ const recent=data.payments.slice().reverse().slice(0,5);
+ document.getElementById("recentPayments").innerHTML=recent.length?
+ recent.map(p=>`<div class="item"><div><strong>${safe(p.tenantName)}</strong><span class="muted">${safe(p.month)} • ${safe(p.date)}</span></div><b class="paid">${money(p.amount)}</b></div>`).join(""):"<div class='empty'>No payments recorded yet.</div>";
+}
+document.getElementById("tenantForm").addEventListener("submit",e=>{
+ e.preventDefault();const f=new FormData(e.target);
+ data.tenants.push({id:id(),name:f.get("name").trim(),phone:f.get("phone").trim(),
+ room:f.get("room").trim(),bed:f.get("bed").trim(),rent:Number(f.get("rent")),
+ deposit:Number(f.get("deposit")||0),joining:f.get("joining")});
+ if(f.get("room")&&f.get("bed")&&!data.beds.some(b=>b.room===f.get("room")&&b.bed===f.get("bed"))){
+  data.beds.push({id:id(),room:f.get("room"),bed:f.get("bed")});
+ }
+ e.target.reset();save();alert("Tenant added successfully.");
+});
+function renderTenants(){
+ const q=(document.getElementById("tenantSearch")?.value||"").toLowerCase();
+ const list=data.tenants.filter(t=>(t.name+" "+t.phone).toLowerCase().includes(q));
+ document.getElementById("tenantList").innerHTML=list.length?list.map(t=>`
+ <div class="item"><div><strong>${safe(t.name)}</strong>
+ <span class="muted">${safe(t.phone)} • Room ${safe(t.room||"-")} / Bed ${safe(t.bed||"-")}</span>
+ <div class="muted">Rent ${money(t.rent)} • Deposit ${money(t.deposit)}</div></div>
+ <button class="danger" onclick="deleteTenant('${t.id}')">Delete</button></div>`).join(""):"<div class='empty'>No tenants added yet.</div>";
+}
+function deleteTenant(x){
+ if(!confirm("Delete this tenant?"))return;
+ data.tenants=data.tenants.filter(t=>t.id!==x);save();
+}
+document.getElementById("bedForm").addEventListener("submit",e=>{
+ e.preventDefault();const f=new FormData(e.target);
+ const room=f.get("room").trim(),bed=f.get("bed").trim();
+ if(data.beds.some(b=>b.room===room&&b.bed===bed)){alert("This bed already exists.");return;}
+ data.beds.push({id:id(),room,bed});e.target.reset();save();
+});
+function renderBeds(){
+ const el=document.getElementById("bedList");
+ el.innerHTML=data.beds.length?data.beds.map(b=>{
+ const tenant=data.tenants.find(t=>t.room===b.room&&t.bed===b.bed);
+ return `<div class="item"><div><strong>Room ${safe(b.room)} • Bed ${safe(b.bed)}</strong>
+ <span class="badge">${tenant?"Occupied":"Available"}</span>
+ ${tenant?`<div class="muted">${safe(tenant.name)}</div>`:""}</div>
+ <button class="danger" onclick="deleteBed('${b.id}')">Delete</button></div>`;
+ }).join(""):"<div class='empty'>No beds added yet.</div>";
+}
+function deleteBed(x){
+ if(!confirm("Delete this bed?"))return;
+ data.beds=data.beds.filter(b=>b.id!==x);save();
+}
+function renderTenantOptions(){
+ ["paymentTenant","complaintTenant"].forEach(id=>{
+ const el=document.getElementById(id);
+ const old=el.value;
+ el.innerHTML=data.tenants.map(t=>`<option value="${t.id}">${safe(t.name)} (${safe(t.phone)})</option>`).join("");
+ if(data.tenants.some(t=>t.id===old))el.value=old;
+ if(!data.tenants.length)el.innerHTML="<option value=''>Add a tenant first</option>";
+ });
+}
+document.getElementById("paymentForm").addEventListener("submit",e=>{
+ e.preventDefault();const f=new FormData(e.target);
+ const t=data.tenants.find(t=>t.id===f.get("tenant"));
+ if(!t){alert("Please add a tenant first.");return;}
+ data.payments.push({id:id(),tenant:t.id,tenantName:t.name,
+ amount:Number(f.get("amount")),date:f.get("date"),month:f.get("month"),method:f.get("method")});
+ e.target.reset();save();alert("Payment saved.");
+});
+function renderPayments(){
+ const el=document.getElementById("paymentList");
+ el.innerHTML=data.payments.length?data.payments.slice().reverse().map(p=>
+ `<div class="item"><div><strong>${safe(p.tenantName)}</strong>
+ <span class="muted">${safe(p.month)} • ${safe(p.date)} • ${safe(p.method)}</span></div>
+ <b class="paid">${money(p.amount)}</b>
+ <button class="danger" onclick="deletePayment('${p.id}')">Delete</button></div>`
+ ).join(""):"<div class='empty'>No payments recorded yet.</div>";
+}
+function deletePayment(x){
+ if(!confirm("Delete this payment?"))return;
+ data.payments=data.payments.filter(p=>p.id!==x);save();
+}
+document.getElementById("complaintForm").addEventListener("submit",e=>{
+ e.preventDefault();const f=new FormData(e.target);
+ const t=data.tenants.find(t=>t.id===f.get("tenant"));
+ if(!t){alert("Please add a tenant first.");return;}
+ data.complaints.push({id:id(),tenant:t.name,detail:f.get("detail"),
+ priority:f.get("priority"),status:"Open"});
+ e.target.reset();save();alert("Complaint added.");
+});
+function renderComplaints(){
+ const el=document.getElementById("complaintList");
+ el.innerHTML=data.complaints.length?data.complaints.slice().reverse().map(c=>
+ `<div class="item"><div><strong>${safe(c.tenant)} • ${safe(c.priority)}</strong>
+ <div class="muted">${safe(c.detail)}</div><span class="badge">${safe(c.status)}</span></div>
+ <div><button class="secondary" onclick="toggleComplaint('${c.id}')">Change Status</button>
+ <button class="danger" onclick="deleteComplaint('${c.id}')">Delete</button></div></div>`
+ ).join(""):"<div class='empty'>No complaints recorded.</div>";
+}
+function toggleComplaint(x){
+ const c=data.complaints.find(c=>c.id===x);
+ if(c)c.status=c.status==="Open"?"Resolved":"Open";save();
+}
+function deleteComplaint(x){
+ if(!confirm("Delete this complaint?"))return;
+ data.complaints=data.complaints.filter(c=>c.id!==x);save();
+}
+function calculateElectricity(){
+ const p=Number(document.getElementById("previous").value);
+ const c=Number(document.getElementById("current").value);
+ const r=Number(document.getElementById("rate").value);
+ if(c<p||p<0||r<0){alert("Please enter valid meter readings and rate.");return;}
+ const units=c-p;
+ document.getElementById("unitResult").textContent=units+" units × "+money(r);
+ document.getElementById("billResult").textContent=money(units*r);
+}
+function saveSettings(){
+ data.settings.name=document.getElementById("propertyName").value.trim();
+ save();alert("Settings saved.");
+}
+function exportData(){
+ const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");a.href=url;a.download="aapka-pg-backup.json";
+ a.click();URL.revokeObjectURL(url);
+}
+function importData(e){
+ const file=e.target.files[0];if(!file)return;
+ const reader=new FileReader();
+ reader.onload=()=>{
+  try{
+   const x=JSON.parse(reader.result);
+   if(!x||!Array.isArray(x.tenants)||!Array.isArray(x.beds)||
+   !Array.isArray(x.payments)||!Array.isArray(x.complaints))throw Error();
+   data={...freshData(),...x};save();alert("Backup imported.");
+  }catch(err){alert("Invalid backup file.");}
+ };
+ reader.readAsText(file);
+ e.target.value="";
+}
+function clearData(){
+ if(!confirm("This permanently deletes all AAPKA PG data in this browser. Continue?"))return;
+ if(!confirm("Are you absolutely sure? Export a backup first if needed."))return;
+ data=freshData();save();alert("App data cleared.");
+}
+renderAll();
+</script>
+</body>
+</html>
