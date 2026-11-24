@@ -23,5 +23,13 @@
       "type": "image/png",
       "purpose": "any"
     }
+  ],
+  "screenshots": [
+    {
+      "src": "/aapka-pg/staynest-preview.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "label": "StayNest PG management app preview"
+    }
   ]
 }
