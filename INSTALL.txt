@@ -1,17 +1,23 @@
-AAPKA PG — installable web-app package
+AAPKA PG PWA support files
 
-This package is a Progressive Web App (PWA) version of the owner prototype.
+Upload these files into the SAME repository folder as index.html:
+- manifest.webmanifest
+- sw.js
+- icon-192.png
+- icon-512.png
 
-To install on Android:
-1. Publish these files to an HTTPS website (for example, a GitHub Pages site).
-2. Open that HTTPS website in Chrome on Android.
-3. Open Chrome's menu and choose "Install app" or "Add to Home screen".
+Then edit index.html:
+1. Inside the <head> section, add:
+   <link rel="manifest" href="/manifest.webmanifest">
+   <meta name="theme-color" content="#38215f">
 
-The app can then launch from your home screen in a standalone window.
-The prototype stores data locally in the browser on that device only.
+2. Just before </body>, add:
+   <script>
+     if ("serviceWorker" in navigator) {
+       window.addEventListener("load", () => {
+         navigator.serviceWorker.register("/sw.js");
+       });
+     }
+   </script>
 
-Important limitations:
-- This is not an APK file.
-- It does not yet have cloud sync, secure login, OTP, payment gateway,
-  document uploads, or multi-user support.
-- Do not enter real tenant sensitive data until secure backend features exist.
+After committing, wait for Netlify to redeploy and test the website again in PWABuilder.
