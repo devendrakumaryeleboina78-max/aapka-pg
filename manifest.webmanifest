@@ -1,23 +1,24 @@
+
 {
-  "id": "/",
-  "name": "AAPKA PG - Owner",
-  "short_name": "AAPKA PG",
-  "description": "PG and hostel property management for owners.",
-  "start_url": "/",
-  "scope": "/",
+  "id": "/aapka-pg/",
+  "name": "StayNest",
+  "short_name": "StayNest",
+  "description": "A smart and simple PG management app. Better spaces. Happier stays.",
+  "start_url": "/aapka-pg/",
+  "scope": "/aapka-pg/",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#f6f3fc",
-  "theme_color": "#38215f",
+  "background_color": "#F7F5EF",
+  "theme_color": "#174B3A",
   "icons": [
     {
-      "src": "/icon-192.png",
+      "src": "/aapka-pg/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/icon-512.png",
+      "src": "/aapka-pg/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
