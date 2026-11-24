@@ -1,0 +1,13 @@
+{
+  "background_color": "#f7f5f0",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "PG Manager",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "PG Manager",
+  "start_url": "/",
+  "theme_color": "#174b3a",
+  "description": "all in one place. Better spaces. Happier stays.",
+  "id": "Manager-pg"
+}
