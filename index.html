@@ -81,5 +81,12 @@ function restoreBackup(){let f=restoreFile.files[0];if(!f){notify('Choose a back
 function notify(s){toast.textContent=s;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),2200)}
 load();renderAll();
 </script>
+  <script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/aapka-pg/sw.js");
+  });
+}
+  </script>
 </body>
 </html>
